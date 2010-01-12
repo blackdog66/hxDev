@@ -1,20 +1,17 @@
 
+NOTE: I don't use of maintain this anymore, it's here just for archival purposes.
+
 hxPlugin
 ========
 
 Is a neko plugin for the Geany IDE (http://geany.uvena.de)
 
-The geany neko plugin does 3 things:
+The geany neko plugin does 2 things:
 
 1. Provides a haXe interface to the Geany plugin API.
 2. Provides code completion for haXe via the haxe --display
-3. Acts as a bootstrap for haxelib libraries.
 
 1 & 2 are working but I haven't got the entire Geany API done yet.
-
-3. I'm working on a modified haxelib which I will distribute with this
-when it's done, it allows custom haxelib server setups, and the plugin
-will provide some kind of interface to download and install new plugins.
 
 
 NOTE TO (Gentoo) x64 USERS
