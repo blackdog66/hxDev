@@ -1,0 +1,6 @@
+-cp .
+-neko Extras.n
+-main Extras
+#--no-traces
+-debug
+-cmd mv Extras.n ~/.geany/plugins/neko

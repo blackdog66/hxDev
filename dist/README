@@ -1,0 +1,6 @@
+
+Stick the nekoplgs in your lib/geany dir with geany's other plugins.
+Stick the Extras.n in ~/.geany/plugins/neko
+
+Restart and you may get autocomplete working.
+

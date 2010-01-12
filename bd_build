@@ -1,0 +1,75 @@
+#!/bin/bash
+# use geany build system to create neko plugin, so
+# just copy files into the svn dir
+
+# the hxDev project dir
+HXDEV=~/haXe/Projects/hxDev
+
+# plugin dir of the geany svn checkout
+GEANY_SVN=~/checkouts/geany/plugins
+
+# where your --prefix was set to
+GEANY_BINARY=~/usr/geany_svn
+
+# build the C plugin
+# ------------------
+
+cd $HXDEV/hxPlugin
+
+cp nekoplg.c neko.h neko_vm.h $GEANY_SVN
+
+cd $GEANY_SVN
+
+if grep -q neko Makefile.am
+then
+	echo  makefile.am already patched
+else
+	echo patching makefile.am
+	patch -p0 < $HXDEV/Makefile.am.diff
+fi
+
+if make
+then
+	make install # should install into GEANY_BINARY
+
+	# build hxPlugin
+	#---------------
+	echo
+	echo "*** COMPILING HAXE PLUGIN"
+	cd $HXDEV/hxPlugin
+	haxe build.hxml
+
+	# build hxDev
+	# -----------
+	#echo *** COMPILING HXDEV
+	#cd ../hxDev
+	#haxe build.hxml
+
+	# build the tests
+	# ---------------
+
+	#cd ../tests
+	#haxe build.hxml
+
+	# create haxelib zip for testing
+	# ------------------------------
+	cd ../../
+
+	if [ -e hxDev.zip ]
+	then
+		rm hxDev.zip
+	fi
+
+	haxelib remove hxDev
+
+	zip -r hxDev hxDev/*
+	haxelib test hxDev.zip
+
+
+	# start the new version up
+	# ------------------------
+
+	cd $GEANY_BINARY/bin
+	./geany
+
+fi

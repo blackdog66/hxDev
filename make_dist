@@ -1,0 +1,6 @@
+#!/bin/bash
+# just copy various files into one place to make it easier for people
+# trying to run it
+
+cp ~/.geany/plugins/neko/* dist/
+cp ~/usr/geany_svn/lib/geany/neko* dist/

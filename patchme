@@ -1,0 +1,60 @@
+diff --git a/hxPlugin/Extras.hx b/hxPlugin/Extras.hx
+index a919f03..bece623 100644
+--- a/hxPlugin/Extras.hx
++++ b/hxPlugin/Extras.hx
+@@ -50,6 +50,7 @@ private class Reg implements haxe.Public
+ 	static var syntaxError	= ~/^(.*?):(\d+?):(.*?):(.*?)$/m;
+ 	static var platform		= ~/.*?access the ([A-Za-z]+) package/s;
+ 	static var pkg			= ~/package\s+(.*);/;
++	static var dontBugMe	= ~/.*?No classes found in trace.*?/;
+ }
+ 
+ /*
+@@ -404,7 +405,7 @@ class Extras {
+ 			var e = "SYN:Expected a (";
+ 			return  untyped e.__s;
+ 		}
+-
++		
+ 		if (!rl.match(output)) {
+ 			// If we can change platforms successfully, go ahead
+ 			if(	checkLimit <= 0 )
+@@ -412,7 +413,6 @@ class Extras {
+ 			else if( checkPlatform(output) )
+ 				return completeDot(pos,line);
+ 			
+-			trace(output);
+ 			if(Reg.syntaxError.match(output))
+ 				output = Reg.syntaxError.matched(4);
+ 			return untyped ("SYN:"+StringTools.trim(output)).__s;
+@@ -451,7 +451,9 @@ class Extras {
+ 				checkLimit = 1;
+ 			else if( checkPlatform(output) )
+ 				return completeBracket(pos,line);
+-			
++				
++			if(Reg.dontBugMe.match(output))
++				return null; // Yes haXe, I know there are no classes in trace ..!
+ 			if(Reg.syntaxError.match(output))
+ 				output = Reg.syntaxError.matched(4);
+ 			return untyped ("SYN:"+output).__s;
+@@ -504,7 +506,6 @@ class Extras {
+ 			if (newPlatform == curPlatform)
+ 				return false;
+ 			changePlatform(newPlatform);
+-			//return "Autocomplete changing platform to "+curPlatform;
+ 			return true;
+ 		}
+ 		return false;
+diff --git a/hxPlugin/build.hxml b/hxPlugin/build.hxml
+index 529709b..ea7b28f 100644
+--- a/hxPlugin/build.hxml
++++ b/hxPlugin/build.hxml
+@@ -1,5 +1,6 @@
+ -cp .
+ -neko Extras.n
+ -main Extras
+-#--no-traces
++--no-traces
+ #-debug
++-cmd mv Extras.n ~/.geany/plugins/neko

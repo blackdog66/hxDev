@@ -1,0 +1,33 @@
+
+hxPlugin
+========
+
+Is a neko plugin for the Geany IDE (http://geany.uvena.de)
+
+The geany neko plugin does 3 things:
+
+1. Provides a haXe interface to the Geany plugin API.
+2. Provides code completion for haXe via the haxe --display
+3. Acts as a bootstrap for haxelib libraries.
+
+1 & 2 are working but I haven't got the entire Geany API done yet.
+
+3. I'm working on a modified haxelib which I will distribute with this
+when it's done, it allows custom haxelib server setups, and the plugin
+will provide some kind of interface to download and install new plugins.
+
+
+NOTE TO (Gentoo) x64 USERS
+==========================
+
+This is what I had to do to get plugin compiled and running properly 
+on 64 bit Gentoo linux. Make sure you have boehm-gc 6.8 installed. 
+I tried all day with 7.0 but it keeps segfaulting on me.
+
+1. Get geany svn source
+2. CFLAGS="[Your CFLAGS from /etc/make.conf] -fPIC" LDFLAGS="[Your LDFLAGS from /etc/make.conf]" ./autogen
+   (make sure you don't forget LDFLAGS if you use stuff like hashstyle=gnu)
+   (CFLAGS are probably optional but I believe -fPIC is important for 64bit. At least it works here :-)
+3. Edit build_plugin script, and set proper paths
+4. sh ./build_plugin
+5. voila!

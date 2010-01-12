@@ -1,0 +1,5 @@
+-lib hxGtk
+-cp .
+-cp /Users/Blue/Projects/hxDev/hxPlugin
+-neko GtkTests.n
+-main TestGtk

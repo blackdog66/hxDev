@@ -1,0 +1,36 @@
+Index: Makefile.am
+===================================================================
+--- Makefile.am	(revision 1878)
++++ Makefile.am	(working copy)
+@@ -15,6 +15,7 @@
+ classbuilder_la_LDFLAGS  = -module -avoid-version
+ htmlchars_la_LDFLAGS     = -module -avoid-version
+ export_la_LDFLAGS        = -module -avoid-version
++nekoplg_la_LDFLAGS        = -module -avoid-version
+ 
+ if PLUGINS
+ 
+@@ -22,7 +23,8 @@
+ plugin_LTLIBRARIES = \
+ 	classbuilder.la \
+ 	htmlchars.la \
+-	export.la
++	export.la \
++	nekoplg.la 
+ 
+ # Plugins not to be installed
+ noinst_LTLIBRARIES = \
+@@ -32,11 +34,13 @@
+ classbuilder_la_SOURCES  = classbuilder.c
+ htmlchars_la_SOURCES     = htmlchars.c
+ export_la_SOURCES        = export.c
++nekoplg_la_SOURCES		 = nekoplg.c
+ 
+ demoplugin_la_LIBADD    = $(GTK_LIBS)
+ classbuilder_la_LIBADD  = $(GTK_LIBS)
+ htmlchars_la_LIBADD     = $(GTK_LIBS)
+ export_la_LIBADD        = $(GTK_LIBS)
++nekoplg_la_LIBADD		= $(GTK_LIBS) -lneko
+ 
+ endif # PLUGINS
+ 

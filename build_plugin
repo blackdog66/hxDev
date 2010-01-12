@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Uses geany build system to create neko plugin
+# Set CONFIGURED to yes if the paths are correctly set.
+CONFIGURED=yes
+
+# the hxDev project dir
+HXDEV=/Users/Blue/Projects/hxDev
+# plugin dir of the geany svn checkout
+GEANY_SVN=/usr/local/src/Geany/geany
+# where your --prefix was set to
+GEANY_BINARY=/usr/local
+
+
+if [[ ${CONFIGURED} != "no" ]];
+then
+	# build the C plugin
+	# ------------------
+
+	cd $HXDEV/hxPlugin
+
+	cp nekoplg.c neko.h neko_vm.h $GEANY_SVN/plugins
+
+	# Add Neko plugin build commands to Makefile
+	cd $GEANY_SVN/plugins
+	patch -N -p0 < $HXDEV/Makefile.am.diff
+
+	if make
+	then
+		make install # should install into GEANY_BINARY
+
+		# build hxPlugin
+		#---------------
+		echo
+		echo "*** COMPILING HAXE PLUGIN"
+		cd $HXDEV/hxPlugin
+		haxe build.hxml
+		mkdir -p ~/.geany/plugins/neko
+		mv Extras.n  ~/.geany/plugins/neko
+
+		cd $GEANY_BINARY/bin
+		./geany
+
+	fi
+else
+	echo "Be sure to configure the paths for this script before running. Edit build_plugin in your favorite editor."
+fi

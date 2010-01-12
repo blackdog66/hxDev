@@ -1,0 +1,12 @@
+# Site
+-cp .
+-neko index.n
+-main hxLib.Site
+-D old_serialize
+
+--next
+-cp .
+# Command
+-neko haxelib.n
+-main Main
+-cmd nekotools boot haxelib.n

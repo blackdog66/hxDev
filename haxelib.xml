@@ -1,0 +1,7 @@
+<project name="hxDev" url="http://blackdog-haxe.com" license="BSD">
+    <user name="blackdog"/>
+    <description>IDE for haXe</description>
+    <version name="0.07">
+    Best so far, plugin still a little flaky on completion sometimes.
+    </version>
+</project>
